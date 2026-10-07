@@ -1,0 +1,51 @@
+# ECR image repositories must be supplied with deploy.sh or an override file.
+images:
+  api: {repository: netops-api, tag: dev, pullPolicy: IfNotPresent}
+  frontend: {repository: netops-frontend, tag: dev, pullPolicy: IfNotPresent}
+  worker: {repository: netops-worker, tag: dev, pullPolicy: IfNotPresent}
+# Created out of band: never put credentials into Helm values or Git.
+existingSecret: netops-secrets
+api:
+  replicas: 2
+  resources:
+    requests: {cpu: 100m, memory: 128Mi}
+    limits: {cpu: 500m, memory: 256Mi}
+frontend:
+  replicas: 2
+  resources:
+    requests: {cpu: 50m, memory: 64Mi}
+    limits: {cpu: 250m, memory: 128Mi}
+worker:
+  intervalSeconds: 10
+  resources:
+    requests: {cpu: 25m, memory: 32Mi}
+    limits: {cpu: 100m, memory: 64Mi}
+postgres:
+  image: postgres:16-alpine
+  size: 5Gi
+  storageClass: netops-gp3
+  resources:
+    requests: {cpu: 100m, memory: 256Mi}
+    limits: {cpu: 500m, memory: 512Mi}
+storageClass:
+  create: true
+  provisioner: ebs.csi.aws.com
+hpa:
+  enabled: false
+  minReplicas: 2
+  maxReplicas: 4
+  cpuPercent: 70
+pdb:
+  enabled: true
+networkPolicy:
+  # Enable only after installing/activating an enforcing network policy engine.
+  enabled: false
+ingress:
+  enabled: true
+  className: alb
+  scheme: internet-facing
+  # Set ACM certificate ARN for HTTPS with HTTP->HTTPS redirect.
+  certificateArn: ''
+  host: ''
+  # Restrict to YOUR public IP /32 for the default unauthenticated lab dashboard.
+  inboundCidrs: ''

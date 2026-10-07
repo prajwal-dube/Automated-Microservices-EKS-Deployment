@@ -1,0 +1,65 @@
+name: netops
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: netops
+      POSTGRES_USER: netops
+      POSTGRES_PASSWORD: ${DB_PASSWORD:?Set DB_PASSWORD in .env}
+    volumes: ["postgres-data:/var/lib/postgresql/data"]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U netops -d netops"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+  migrate:
+    build: ./api
+    command: ["python", "-m", "app.migrate"]
+    environment: &api-env
+      DB_HOST: postgres
+      DB_NAME: netops
+      DB_USER: netops
+      DB_PASSWORD: ${DB_PASSWORD:?Set DB_PASSWORD in .env}
+      INGEST_TOKEN: ${INGEST_TOKEN:?Set INGEST_TOKEN in .env}
+    depends_on:
+      postgres: {condition: service_healthy}
+    read_only: true
+    tmpfs: ["/tmp"]
+  api:
+    build: ./api
+    environment: *api-env
+    ports: ["127.0.0.1:8000:8000"]
+    depends_on:
+      migrate: {condition: service_completed_successfully}
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/readyz', timeout=2)"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+    read_only: true
+    tmpfs: ["/tmp"]
+    restart: unless-stopped
+  frontend:
+    build: ./frontend
+    environment:
+      API_UPSTREAM: api:8000
+    ports: ["127.0.0.1:8080:8080"]
+    depends_on:
+      api: {condition: service_healthy}
+    read_only: true
+    tmpfs: ["/tmp"]
+    restart: unless-stopped
+  worker:
+    build: ./worker
+    environment:
+      API_URL: http://api:8000
+      INGEST_TOKEN: ${INGEST_TOKEN:?Set INGEST_TOKEN in .env}
+      PROBE_INTERVAL_SECONDS: "10"
+      PROBE_TARGETS: '[{"name":"api","url":"http://api:8000/readyz"},{"name":"frontend","url":"http://frontend:8080/healthz"}]'
+    depends_on:
+      api: {condition: service_healthy}
+      frontend: {condition: service_started}
+    read_only: true
+    restart: unless-stopped
+volumes:
+  postgres-data:

@@ -1,0 +1,86 @@
+Helm not found: chart lint/render checks skipped.
+test_actual_http_request_roundtrip (test_api.ApiTests.test_actual_http_request_roundtrip) ... {"event": "request", "request_id": "5ca5cf7b-1848-4070-bb6a-7a0ec428c7f3", "path": "/api/observations", "method": "POST", "status": 201, "duration_ms": 0.393}
+{"event": "request", "request_id": "49f79f7e-9875-40fc-b713-116d2f756a38", "path": "/readyz", "method": "GET", "status": 200, "duration_ms": 0.207}
+{"event": "request", "request_id": "75943f51-a7c3-4e29-8ae8-84d83a5f1248", "path": "/api/observations", "method": "POST", "status": 201, "duration_ms": 0.234}
+{"event": "request", "request_id": "651a1d6c-9831-4917-b673-0ffe2d44fd8e", "path": "/api/history", "method": "GET", "status": 200, "duration_ms": 0.274}
+{"event": "request", "request_id": "e0df0c51-2db3-44b9-ad38-7ab9c0bed362", "path": "/api/targets", "method": "GET", "status": 200, "duration_ms": 0.25}
+ok
+test_bad_body_and_content_type (test_api.ApiTests.test_bad_body_and_content_type) ... {"event": "request", "request_id": "da95971b-4f72-44f4-b567-24b090171373", "path": "/api/observations", "method": "POST", "status": 400, "duration_ms": 0.084}
+{"event": "request", "request_id": "c62157f8-cd70-4e5e-9870-625ec35f8fc1", "path": "/api/observations", "method": "POST", "status": 400, "duration_ms": 0.03}
+{"event": "request", "request_id": "427ba4fe-990b-4d82-a87d-1d3bf7e4f466", "path": "/api/observations", "method": "POST", "status": 413, "duration_ms": 0.018}
+{"event": "request", "request_id": "8c179718-bd8d-43a2-bd55-a8651833178a", "path": "/api/observations", "method": "POST", "status": 415, "duration_ms": 0.016}
+ok
+test_db_outage_does_not_break_liveness (test_api.ApiTests.test_db_outage_does_not_break_liveness) ... {"event": "request_failed", "request_id": "f5c21280-5b9b-4e95-aa87-a71f68d4a6bc"}
+Traceback (most recent call last):
+  File "/workspace/scratch/a95f7e98ad62/project-1-netops-eks/api/app/main.py", line 57, in __call__
+    status, payload = self.route(method, path, env)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/scratch/a95f7e98ad62/project-1-netops-eks/api/app/main.py", line 77, in route
+    self.db.ready()
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/mock.py", line 1139, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/mock.py", line 1143, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/mock.py", line 1198, in _execute_mock_call
+    raise effect
+RuntimeError: db unavailable
+{"event": "request", "request_id": "f5c21280-5b9b-4e95-aa87-a71f68d4a6bc", "path": "/readyz", "method": "GET", "status": 503, "duration_ms": 1.099}
+{"event": "request", "request_id": "00f6312b-1c0a-4c16-a1d7-02542bbdfc15", "path": "/healthz", "method": "GET", "status": 200, "duration_ms": 0.02}
+ok
+test_health_and_empty_database (test_api.ApiTests.test_health_and_empty_database) ... {"event": "request", "request_id": "d87988a5-abc8-4158-85cc-5b6a9165ea65", "path": "/healthz", "method": "GET", "status": 200, "duration_ms": 0.022}
+{"event": "request", "request_id": "8be0fe34-a727-4219-b519-5c84c38934aa", "path": "/readyz", "method": "GET", "status": 200, "duration_ms": 0.189}
+{"event": "request", "request_id": "ad078dae-4130-430a-b973-b6de6bc156fa", "path": "/api/targets", "method": "GET", "status": 200, "duration_ms": 0.151}
+ok
+test_ingestion_requires_token (test_api.ApiTests.test_ingestion_requires_token) ... {"event": "request", "request_id": "4b0b5178-3f8e-476b-b706-56021bbb908c", "path": "/api/observations", "method": "POST", "status": 401, "duration_ms": 0.02}
+{"event": "request", "request_id": "152e3c9c-5d00-4bfc-a5d0-1fa951b275db", "path": "/api/observations", "method": "POST", "status": 401, "duration_ms": 0.017}
+{"event": "request", "request_id": "25012ff9-f492-45df-bc94-0020bb02b65b", "path": "/api/observations", "method": "POST", "status": 401, "duration_ms": 0.014}
+ok
+test_invalid_history_limit (test_api.ApiTests.test_invalid_history_limit) ... {"event": "request", "request_id": "0ce16109-feaf-4365-9c2f-1d8a853ed3e8", "path": "/api/history", "method": "GET", "status": 400, "duration_ms": 0.029}
+{"event": "request", "request_id": "ce67f6bc-4e95-4607-9002-c9cb51ab424b", "path": "/api/history", "method": "GET", "status": 400, "duration_ms": 0.029}
+{"event": "request", "request_id": "eceab3ab-fae9-47f7-a3c7-10c5315d3476", "path": "/api/history", "method": "GET", "status": 400, "duration_ms": 0.021}
+{"event": "request", "request_id": "857b20af-f2f2-4ada-9eac-81448293707a", "path": "/api/history", "method": "GET", "status": 400, "duration_ms": 0.024}
+{"event": "request", "request_id": "d1221c78-e8d2-49c0-ab0e-bdd26d346f30", "path": "/api/history", "method": "GET", "status": 400, "duration_ms": 0.242}
+ok
+test_invalid_values_are_rejected (test_api.ApiTests.test_invalid_values_are_rejected) ... {"event": "request", "request_id": "f19697ba-cf96-4811-84f6-284b6722c18d", "path": "/api/observations", "method": "POST", "status": 400, "duration_ms": 0.07}
+{"event": "request", "request_id": "50ecddd9-360b-4e8b-8313-99392bf43f50", "path": "/api/observations", "method": "POST", "status": 400, "duration_ms": 0.025}
+{"event": "request", "request_id": "130bcd92-a764-4450-9c82-a256f65ceb2b", "path": "/api/observations", "method": "POST", "status": 400, "duration_ms": 0.021}
+{"event": "request", "request_id": "f2596f3b-cf3b-4b74-bb89-ca6308b87c34", "path": "/api/observations", "method": "POST", "status": 400, "duration_ms": 0.026}
+{"event": "request", "request_id": "fe3d4e2d-1e00-418e-9b71-193178f1fe88", "path": "/api/observations", "method": "POST", "status": 400, "duration_ms": 0.021}
+{"event": "request", "request_id": "ab3018ab-3227-4a4f-bb38-0cd828779364", "path": "/api/observations", "method": "POST", "status": 400, "duration_ms": 0.017}
+{"event": "request", "request_id": "726c36e8-1586-4299-821c-ffc2c4fcfd08", "path": "/api/observations", "method": "POST", "status": 400, "duration_ms": 0.019}
+{"event": "request", "request_id": "a5a54cbb-5a59-4b55-b508-436b466bd5f7", "path": "/api/observations", "method": "POST", "status": 400, "duration_ms": 0.015}
+{"event": "request", "request_id": "dec0e922-6310-47b5-b7f3-ace3e3d5fa80", "path": "/api/observations", "method": "POST", "status": 400, "duration_ms": 0.015}
+{"event": "request", "request_id": "04a4f263-dc78-4ea2-84cd-95cde9506623", "path": "/readyz", "method": "GET", "status": 200, "duration_ms": 0.129}
+ok
+test_methods_and_unknown_routes (test_api.ApiTests.test_methods_and_unknown_routes) ... {"event": "request", "request_id": "05a77fd8-3c02-44cf-9b19-db1a9c094ee5", "path": "/api/targets", "method": "DELETE", "status": 405, "duration_ms": 0.021}
+{"event": "request", "request_id": "4381fcb5-e6e5-4f1a-86db-ac6e69052b2b", "path": "/missing", "method": "GET", "status": 404, "duration_ms": 0.012}
+ok
+test_retention_expires_old_observations (test_api.ApiTests.test_retention_expires_old_observations) ... {"event": "request", "request_id": "66b8127d-8626-4436-b2ef-1321d51f4818", "path": "/api/observations", "method": "POST", "status": 201, "duration_ms": 0.228}
+{"event": "request", "request_id": "20c71115-41ae-4985-b483-657f77b25d2f", "path": "/api/observations", "method": "POST", "status": 201, "duration_ms": 0.235}
+{"event": "request", "request_id": "b3d376f5-6f3b-4f0e-a32d-bad18d60f38d", "path": "/api/history", "method": "GET", "status": 200, "duration_ms": 0.142}
+ok
+test_roundtrip_latest_and_history (test_api.ApiTests.test_roundtrip_latest_and_history) ... {"event": "request", "request_id": "8e609ce7-164a-4567-a247-70eb79d83202", "path": "/api/observations", "method": "POST", "status": 201, "duration_ms": 0.269}
+{"event": "request", "request_id": "7b02e4a7-940d-46f7-a503-4058fb1234dc", "path": "/api/observations", "method": "POST", "status": 201, "duration_ms": 0.195}
+{"event": "request", "request_id": "224292f7-6c77-4276-90d5-697f2a0c033b", "path": "/api/targets", "method": "GET", "status": 200, "duration_ms": 0.167}
+{"event": "request", "request_id": "12871fc6-eaf2-4a8e-b17a-72706bc97083", "path": "/api/history", "method": "GET", "status": 200, "duration_ms": 0.235}
+ok
+test_target_isolation_and_order (test_api.ApiTests.test_target_isolation_and_order) ... {"event": "request", "request_id": "f73d1707-367b-4296-9b0b-6086b49598a9", "path": "/api/observations", "method": "POST", "status": 201, "duration_ms": 0.231}
+{"event": "request", "request_id": "9ce6941a-e858-4fa1-9765-9555b268d6f8", "path": "/api/observations", "method": "POST", "status": 201, "duration_ms": 0.21}
+{"event": "request", "request_id": "586042bc-1c1e-4b4c-8079-e41563a164f4", "path": "/api/targets", "method": "GET", "status": 200, "duration_ms": 0.152}
+{"event": "request", "request_id": "214c568a-8641-44aa-918d-64710151ca7f", "path": "/api/history", "method": "GET", "status": 200, "duration_ms": 0.128}
+ok
+test_unhealthy_timeout_and_redirect_status (test_api.ApiTests.test_unhealthy_timeout_and_redirect_status) ... {"event": "request", "request_id": "a54fd960-7bf1-4259-82e2-b81ee2052786", "path": "/api/observations", "method": "POST", "status": 201, "duration_ms": 0.302}
+{"event": "request", "request_id": "e398e3db-4cf8-4444-90c2-61eca1374f20", "path": "/api/observations", "method": "POST", "status": 201, "duration_ms": 0.186}
+ok
+test_configuration_rejects_unsafe_or_ambiguous_destinations (test_worker.WorkerTests.test_configuration_rejects_unsafe_or_ambiguous_destinations) ... ok
+test_connection_failure_is_recorded (test_worker.WorkerTests.test_connection_failure_is_recorded) ... ok
+test_submission_includes_auth_and_json (test_worker.WorkerTests.test_submission_includes_auth_and_json) ... ok
+test_success_and_failure_are_real_statuses (test_worker.WorkerTests.test_success_and_failure_are_real_statuses) ... ok
+test_valid_configuration (test_worker.WorkerTests.test_valid_configuration) ... ok
+
+----------------------------------------------------------------------
+Ran 17 tests in 1.035s
+
+OK

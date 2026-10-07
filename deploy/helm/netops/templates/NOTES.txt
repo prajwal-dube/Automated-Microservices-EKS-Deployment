@@ -1,0 +1,4 @@
+NetOps resources are installed in {{ .Release.Namespace }}.
+Check: kubectl get pods,svc,ingress,pvc -n {{ .Release.Namespace }}
+Local access: kubectl port-forward -n {{ .Release.Namespace }} svc/{{ include "netops.name" . }}-frontend 8080:8080
+Database is single-instance; persistent storage is retained on uninstall.

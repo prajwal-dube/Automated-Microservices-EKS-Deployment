@@ -1,0 +1,7 @@
+apiVersion: v2
+name: netops
+description: React dashboard, Python API/probe worker and PostgreSQL for an EKS lab
+type: application
+version: 1.0.0
+appVersion: 1.0.0
+kubeVersion: '>=1.29.0-0'

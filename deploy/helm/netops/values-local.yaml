@@ -1,0 +1,12 @@
+ingress:
+  enabled: false
+storageClass:
+  create: false
+postgres:
+  storageClass: standard
+pdb:
+  enabled: false
+api:
+  replicas: 1
+frontend:
+  replicas: 1

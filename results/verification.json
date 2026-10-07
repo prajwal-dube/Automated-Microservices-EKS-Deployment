@@ -1,0 +1,34 @@
+{
+  "recorded_at": "2026-10-07T16:12:31.989317+00:00",
+  "offline_tests": {
+    "passed": 17,
+    "failed": 0,
+    "command": "bash scripts/check.sh",
+    "database": "SQLite, isolated temporary databases",
+    "http": "Real localhost HTTP; probe -> authenticated API ingestion -> persisted history"
+  },
+  "passed": [
+    "Python syntax",
+    "Bash and POSIX shell syntax",
+    "React JSX and Vite configuration syntax parsed with Babel",
+    "package.json parsed",
+    "Non-template YAML parsed"
+  ],
+  "parsed_yaml": [
+    "compose.yaml",
+    "deploy/eks/cluster.yaml",
+    "deploy/helm/netops/Chart.yaml",
+    "deploy/helm/netops/values.yaml",
+    "deploy/helm/netops/values-local.yaml"
+  ],
+  "not_run": [
+    "Docker image builds and Compose",
+    "React npm install/production build and browser UI validation",
+    "PostgreSQL driver/runtime integration",
+    "Helm lint/template rendering and Kubernetes API validation",
+    "AWS ECR/EKS/ALB/EBS deployment",
+    "HPA or NetworkPolicy enforcement",
+    "Load benchmark and image-size measurement"
+  ],
+  "limitations": "Docker, Helm, kubectl, and PostgreSQL are not installed in the creation environment; external package downloads blocked. Offline test success does not establish cloud readiness or measured performance."
+}

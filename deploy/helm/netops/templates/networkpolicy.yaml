@@ -1,0 +1,34 @@
+{{- if .Values.networkPolicy.enabled }}
+# Ingress policy only: external targets remain possible for the worker.
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: {{ include "netops.name" . }}-db
+spec:
+  podSelector:
+    matchLabels: {app.kubernetes.io/instance: {{ .Release.Name }}, component: postgres}
+  policyTypes: [Ingress]
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels: {app.kubernetes.io/instance: {{ .Release.Name }}, component: api}
+        - podSelector:
+            matchLabels: {app.kubernetes.io/instance: {{ .Release.Name }}, component: migrate}
+      ports: [{protocol: TCP, port: 5432}]
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: {{ include "netops.name" . }}-api
+spec:
+  podSelector:
+    matchLabels: {app.kubernetes.io/instance: {{ .Release.Name }}, component: api}
+  policyTypes: [Ingress]
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels: {app.kubernetes.io/instance: {{ .Release.Name }}, component: frontend}
+        - podSelector:
+            matchLabels: {app.kubernetes.io/instance: {{ .Release.Name }}, component: worker}
+      ports: [{protocol: TCP, port: 8000}]
+{{- end }}

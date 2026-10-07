@@ -1,0 +1,36 @@
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+metadata:
+  name: netops-lab
+  region: ap-south-1
+  version: '1.35'
+iam:
+  withOIDC: true
+vpc:
+  nat:
+    gateway: Single
+  clusterEndpoints:
+    publicAccess: true
+    privateAccess: true
+  # Replace with your real public IP /32 before creation (script enforces this).
+  publicAccessCIDRs: ["YOUR_PUBLIC_IP/32"]
+managedNodeGroups:
+  - name: app-nodes
+    instanceType: t3.medium
+    desiredCapacity: 2
+    minSize: 2
+    maxSize: 3
+    privateNetworking: true
+    volumeSize: 20
+    disableIMDSv1: true
+    # IRSA controllers don't need pod access to node IAM credentials.
+    # Apps in this project make no AWS SDK calls.
+    tags:
+      project: netops-lab
+addons:
+  - name: vpc-cni
+  - name: coredns
+  - name: kube-proxy
+cloudWatch:
+  clusterLogging:
+    enableTypes: ["api", "audit", "authenticator"]
