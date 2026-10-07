@@ -281,13 +281,12 @@ release prerequisites must still be checked when you deploy.
 
 ## Resume Points 
 
--- Automated Microservices & Network-Health Dashboard Deployment
+**Automated Microservices & Network-Health Dashboard Deployment**
 
-Technologies: Kubernetes (AWS EKS), Docker, Helm, Python, React, PostgreSQL, ALB Ingress, Git
+**Technologies:** AWS EKS, Kubernetes, Docker, Helm, Python, React, PostgreSQL, AWS ALB, Git
 
-- Engineered a full-stack network-health dashboard using React, Python microservices, and PostgreSQL to actively track real-time HTTP/HTTPS response times and system metrics.
-- Containerized multi-stack applications by creating multi-stage Dockerfiles and Docker Compose environments, enforcing container security via non-root execution and authenticated data ingestion.
-- Authored production-ready Helm charts to orchestrate Kubernetes Deployments, StatefulSets, and Services on an AWS EKS cluster.
-- Configured advanced cluster networking and traffic optimization using AWS Application Load Balancer (ALB) Ingress, integrating custom liveness/readiness health probes and horizontal pod autoscaling.
-
+- Engineered a containerized network-health dashboard with **React, Python/Gunicorn API, background probe worker, and PostgreSQL**, continuously collecting HTTP status and response-time observations for monitored services.
+- Containerized the application using **multi-stage Docker builds and Docker Compose**, implementing non-root containers and bearer-token authentication for worker-to-API data ingestion.
+- Authored **Helm charts for AWS EKS** covering Deployments, StatefulSet, Services, ConfigMaps, Jobs, Ingress, PodDisruptionBudget, and persistent EBS-backed PostgreSQL storage.
+- Configured **AWS ALB Ingress and Kubernetes health probes** to expose and maintain the dashboard on EKS; additionally prepared optional **HPA and NetworkPolicy** configurations for controlled scaling and pod-level traffic restrictions.
 
