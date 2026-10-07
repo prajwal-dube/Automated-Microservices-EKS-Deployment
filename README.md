@@ -278,3 +278,16 @@ throughput, latency reduction, or image-size reduction percentage.
 
 These references informed the deployment configuration. Version support and
 release prerequisites must still be checked when you deploy.
+
+## Resume Points 
+
+-- Automated Microservices & Network-Health Dashboard Deployment
+
+Technologies: Kubernetes (AWS EKS), Docker, Helm, Python, React, PostgreSQL, ALB Ingress, Git
+
+- Engineered a full-stack network-health dashboard using React, Python microservices, and PostgreSQL to actively track real-time HTTP/HTTPS response times and system metrics.
+- Containerized multi-stack applications by creating multi-stage Dockerfiles and Docker Compose environments, enforcing container security via non-root execution and authenticated data ingestion.
+- Authored production-ready Helm charts to orchestrate Kubernetes Deployments, StatefulSets, and Services on an AWS EKS cluster.
+- Configured advanced cluster networking and traffic optimization using AWS Application Load Balancer (ALB) Ingress, integrating custom liveness/readiness health probes and horizontal pod autoscaling.
+
+
